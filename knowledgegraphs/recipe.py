@@ -18,3 +18,5 @@ def callrecipe(nlpmodule,lib,text):
     return r.json()
 
 
+# dynamicloopBasedOnLEngthOfArrays=sorted({"relation":relationList,"people":peopleFound,"movie":movieFound}.items(), key=lambda temp:len(temp[1]) , reverse=True)
+# print dynamicloopBasedOnLEngthOfArrays

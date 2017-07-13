@@ -18,7 +18,7 @@ def _lowercase(obj):
     elif isinstance(obj, list):
         return [_lowercase(k) for k in obj]
     elif isinstance(obj, basestring):
-        return obj.lower()
+        return obj.encode('ascii','ignore').lower()
     else:
         return obj
 interstellardata = _lowercase(interstellardata)
@@ -52,7 +52,8 @@ for n in interstellardata["credits"]["crew"]:
     insert_query4 = '''MATCH (TheMatrix:Movie {title:{data}}) MERGE (Genres:Person {name:"'''+n["name"].lower()+'''",gender: "'''+n["gender"].lower()+'''"})''' + ''' MERGE (TheMatrix)-[:'''+job +''' {department:"'''+n["department"].lower()+'''",generic_type:"job"}]->(Genres);'''
     # print insert_query4
     session.run(insert_query4,parameters={"data":interstellardata["original_title"],"pairs":[interstellardata],"genres":interstellardata["genres"],"keywords":interstellardata["keywords"]["keywords"],"production_companies":interstellardata["production_companies"],"crew":interstellardata["credits"]["crew"],"cast":interstellardata["credits"]["cast"]})
-
+    createNodeperformance="match(n:Movie)-[p]->(m:Person) set n.performance_good=0,n.performance_bad=0,n.performance_neutral=0,p.performance_good=0,p.performance_bad=0,p.performance_neutral=0"
+    session.run(createNodeperformance)
 # insert_query4 = "MATCH (TheMatrix:Movie) UNWIND {crew} as genres MERGE (Genres:Person {name:genres.name,gender:genres.gender}) MERGE (TheMatrix)-[:{genres.job} {department:genres.department,generic_type:job}]->(Genres);"
 
 

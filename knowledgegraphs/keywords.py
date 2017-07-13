@@ -6,6 +6,7 @@ def tagwords(recipeoutput):
     if "pos" in recipeoutput:
         # print "123"
         for item in recipeoutput["pos"]:
+            print item
             if item["pos_tag"] in ["NOUN","VERB","ADJECTIVE","PRONOUN"]:
                 if item["pos_tag"] in tagwordsdictionary:
                     tagwordsdictionary[item["pos_tag"]].append(str(item["word"]))
@@ -29,10 +30,11 @@ def tagwords(recipeoutput):
 
 #recipe pos call
 def getngrams(text):
-    recipeoutput =recipe.callrecipe("pos","spacy",text)
+    recipeoutput =recipe.callrecipe("pos","google",text)
     if recipeoutput:
         return tagwords(recipeoutput)
     else:
         return None
 
 
+# print getngrams("fantastic movie to start off an era of christian bale")
