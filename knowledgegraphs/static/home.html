@@ -3,25 +3,20 @@
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	        <h4 class="modal-title">Sample Questions one can ask</h4>
+	        <h4 class="modal-title">Sample Questions</h4>
 	      </div>
 	      <div class="modal-body">
-	      	<label for="sampleQuestion"> Select a Sample Question </label>
-            <ui-select ng-model="sampleQuestion" search-enabled="false" title="Select Phrase" on-select="getSampleAnswer($item)">
-		      <ui-select-match placeholder="Select a Question">
-		        <span ng-bind="$select.selected.text"></span>
-		      </ui-select-match>  
-		      <ui-select-choices repeat="question in sampleQuestions">
-		        <span ng-bind="question.text"></span>
-		      </ui-select-choices>
-		    </ui-select>
-		    <div class="answer-display">
-			    <span style="color:black;"> {{sampleAnswer.text}} </span>  
-		    </div>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary">Save changes</button>
+	      	<label for="samplequestions"> Select a Sample Question </label>
+            <div class="btn-group" style="width:100%;">
+			  <a href="#" class="btn btn-default" style="width:90%;">Select a Question</a>
+			  <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="width:10%;"><span class="caret"></span></a>
+			  <ul class="dropdown-menu" style="width:100%;">
+				<li><a>Who is the actor in Interstellar?</a></li>
+				<li><a>Who is the director of Batman Begins?</a></li>
+				<li><a>Who produced Inception?</a></li>
+				  <li><a>Who produced the movie Inception?</a></li>
+			  </ul>
+			</div>
 	      </div>
 	    </div>
 	  </div>
@@ -46,8 +41,8 @@
 					  <input class="form-control" id="user-question" type="text" placeholder="Enter a Question" ng-model="userQuestion">
 					</div>
 					<button class="btn btn-primary center-block" type="submit"> Get Answer</button>
-					<div class="answer-display">
-					<span>{{userAnswer}}</span>
+					<div class="answer-display" style="overflow-y:auto; padding:10px;">
+					{{userAnswer}}
 					</div>
 				</form>	
 			</div>
@@ -64,8 +59,12 @@
 						<div class="form-group">
 							<div class=" col-md-12 pull-left">
 							<button type="submit" class="btn btn-primary">Submit</button>
-							<button type="reset" class="btn btn-default">Cancel</button>
+							<button type="reset" class="btn btn-default">Reset</button>
 							</div>
+						</div>
+						<div class="alert alert-dismissible alert-success" ng-show="saveStatus" ng-hide="!saveStatus">
+						  <button type="button" class="close" data-dismiss="alert">&times;</button>
+						  <strong>Review Added!</strong> You successfully added a review.
 						</div>
 					</fieldset>
 				</form>
