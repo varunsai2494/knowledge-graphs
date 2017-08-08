@@ -43,7 +43,7 @@ from flask import Flask, request
 import app
 import qaSystem
 
-appf = Flask(__name__, static_url_path='public')
+appf = Flask(__name__, static_url_path='/public')
 @appf.route('/updategraph', methods=['GET', 'POST'])
 def updategraph():
     if request.method == 'POST':
