@@ -38,12 +38,50 @@ import json
 # print a._get_values
 # for i in a:
 #     print a
+import traceback
+from flask import Flask, request
 import app
-# a= app.getUpdateNodesinfo("i loved the performance of anne hathaway and matt damon in interstellar")
-a= app.getUpdateNodesinfo("i loved the performance of christian bale anne hathaway and tom hardy in the dark knight rises")
-print a
-import neo4jNodeList as neo
-for item in a.split(";"):
-    if item.strip():
-        neo.session.run(item)
-print "success"
+import qaSystem
+
+appf = Flask(__name__, static_url_path='public')
+@appf.route('/updategraph', methods=['GET', 'POST'])
+def updategraph():
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.data)
+            if "text" in data:
+                output=app.updateNode(str(data["text"]))
+                if output:
+                    return json.dumps({"text":output})
+                else:
+                    return {"text": "Something went wrong"}
+            else:
+                return {"text":"Something went wrong"}
+        except Exception as e:
+            print traceback.format_exc()
+
+
+
+
+
+@appf.route('/qna', methods=['GET', 'POST'])
+def qna():
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.data)
+            if "text" in data:
+                output=qaSystem.finalOutput(str(data["text"]))
+                if output:
+                    return json.dumps({"text":output})
+                else:
+                    return {"text": "Something went wrong"}
+            else:
+                return {"text":"Something went wrong"}
+        except Exception as e:
+            print traceback.format_exc()
+
+
+
+
+if __name__ == '__main__':
+    appf.run(host="0.0.0.0", port=8000,debug=True, threaded=False)

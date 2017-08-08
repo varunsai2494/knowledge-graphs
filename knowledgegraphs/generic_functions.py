@@ -15,6 +15,5 @@ def doubleMatchWithNoDuplicates(string, substringarray):
             string=string .replace(item," ")
     return match
 
-print doubleMatchWithNoDuplicates("i liked the dark knight rises",["the dark knight","inception","interstellar","the dark knight rises"])
 
 

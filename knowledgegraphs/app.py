@@ -192,6 +192,20 @@ def getUpdateNodesinfo(rawtext):
                 Query=""
     return Query
 
+def updateNode(text):
+    print text
+    a= getUpdateNodesinfo(text)
+    print a
+    import neo4jNodeList as neo
+    for item in a.split(";"):
+        if item.strip():
+            neo.session.run(item)
+    return "success"
+# # a= app.getUpdateNodesinfo("i loved the performance of anne hathaway and matt damon in interstellar")
+# a= app.getUpdateNodesinfo("i loved the performance of christian bale anne hathaway and tom hardy in the dark knight rises")
+import traceback
+from qaSystem import finalOutput
+
 
 
 # print neo4jNodeList.getAllNodes()

@@ -190,10 +190,9 @@ def finalOutput(question):
     return output
 
 
-print "OUTPUT"
+# print "OUTPUT"
 # print "asking one  name"
-# print finalOutput("who is the actor in interstellar")
-print "asking multiple names"
+# print finalOutput("who is the art director  dark knight ")
 # print finalOutput("who are the actor in Batman Begins")
 # print "Asking without is/are/was/were"
 # print finalOutput("who directed Batman Begins")
