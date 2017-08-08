@@ -43,7 +43,7 @@ from flask import Flask, request
 import app
 import qaSystem
 
-appf = Flask(__name__, static_url_path='/public')
+appf = Flask(__name__, static_url_path='')
 @appf.route('/updategraph', methods=['GET', 'POST'])
 def updategraph():
     if request.method == 'POST':
@@ -61,6 +61,9 @@ def updategraph():
             print traceback.format_exc()
 
 
+@appf.route('/')
+def root():
+    return appf.send_static_file('index.html')
 
 
 
