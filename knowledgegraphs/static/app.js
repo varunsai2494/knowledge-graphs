@@ -37,7 +37,7 @@ KnowledgeGraph.controller('HomeCtrl', function($scope, $http, $q){
     $scope.getAnswer = function(question){
         $http({
             method: 'POST',
-            url: 'http://localhost:8000/qna',
+            url: 'http://35.164.231.42:8000/qna',
             headers: {
                 'content-type'  : 'application/json'
             },
@@ -57,7 +57,7 @@ KnowledgeGraph.controller('HomeCtrl', function($scope, $http, $q){
     $scope.updateKnowledge = function(text){
         $http({
             method: 'POST',
-            url: 'http://localhost:8000/updategraph',
+            url: 'http://35.164.231.42:8000/updategraph',
             headers: {
                 'content-type'  : 'application/json'
             },
