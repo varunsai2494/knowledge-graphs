@@ -53,7 +53,7 @@ KnowledgeGraph.controller('HomeCtrl', function($scope, $http, $q){
                 'content-type'  : 'application/json'
             },
             data: {
-                "text": JSON.stringify(question)
+                'text': question
             }
         })
         .then(function(response) {
@@ -74,7 +74,7 @@ KnowledgeGraph.controller('HomeCtrl', function($scope, $http, $q){
                 'content-type'  : 'application/json'
             },
             data: {
-                text: JSON.stringify(text)
+                'text': text
             }
         }).then(function(response) {
             console.log(response);

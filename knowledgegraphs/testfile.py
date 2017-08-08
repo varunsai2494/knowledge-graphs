@@ -50,7 +50,7 @@ def updategraph():
         try:
             data = json.loads(request.data)
             if "text" in data:
-                output=app.updateNode(str(data["text"]))
+                output=app.updateNode(str(data["text"]).replace('"',''))
                 if output:
                     return json.dumps({"text":output})
                 else:
@@ -71,9 +71,10 @@ def root():
 def qna():
     if request.method == 'POST':
         try:
-            data = json.loads(request.data)
+            data =json.loads(request.data)
+            print data
             if "text" in data:
-                output=qaSystem.finalOutput(str(data["text"]))
+                output=qaSystem.finalOutput(str(data["text"]).replace('"','') )
                 if output:
                     return json.dumps({"text":output})
                 else:
