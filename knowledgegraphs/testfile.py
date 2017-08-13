@@ -42,8 +42,9 @@ import traceback
 from flask import Flask, request
 import app
 import qaSystem
-
+from flask_cors import CORS, cross_origin
 appf = Flask(__name__, static_url_path='')
+CORS(appf)
 @appf.route('/updategraph', methods=['GET', 'POST'])
 def updategraph():
     if request.method == 'POST':
@@ -88,4 +89,4 @@ def qna():
 
 
 if __name__ == '__main__':
-    appf.run(host="0.0.0.0", port=8000,debug=True, threaded=False)
+    appf.run(host="0.0.0.0", port=8000,debug=True, threaded=True)
