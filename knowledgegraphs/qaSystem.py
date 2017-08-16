@@ -35,15 +35,40 @@ def determineActorstalkedAbout(sentence):
     actors_movie=neo.getAllNodes()
     actors=[item for item in actors_movie if str(item[1])=="Person"]
     actorsFound=genfunc.doubleMatch(sentence,[item[0] for item in actors])
-    return actorsFound
+    ActorsFoundwithS=[i.replace("'s","") for i in (genfunc.doubleMatch(sentence,[str(str(item[0]).strip()+"'s") for item in actors]))]
+    return list(set(actorsFound+ActorsFoundwithS))
 
 def determineMovieTalkedAbout(sentence):
     actors_movie = neo.getAllNodes()
     actors = [item for item in actors_movie if str(item[1]) == "Movie"]
     print actors
     moviesFound = genfunc.doubleMatch(sentence, [item[2] for item in actors])
+    if moviesFound:
+        moviesFoundTemporary=sorted(moviesFound, key=lambda time: len(time), reverse=True)
+        print moviesFoundTemporary
+        length=len(moviesFoundTemporary)
+        temp=[]
+        if length>1:
+            for i in range(len(moviesFoundTemporary)):
+                for j in moviesFoundTemporary[i+1:]:
+                    if str(j) in str(moviesFoundTemporary[i]):
+                        temp.append(j)
+
+            moviesFound=list(set(moviesFoundTemporary)-set(temp))
+        else:
+            pass
+        print moviesFound
+
     return moviesFound
 
+def stringfilter(text):
+    print text
+    text = " ".join(filter(None, text.split(" ")))
+    a = [[",", " , "], [".", " . "], ["?", " ? "], ["!", " ! "], ["-", ""]]
+    for i in a:
+        text = text.replace(i[0], i[1])
+    text = " ".join(filter(None, text.split(" ")))
+    return text
 
 ######### functions that determine the answer from graph db
 def who(question):
@@ -51,17 +76,19 @@ def who(question):
     relationsDict = constants.relationWithMovie
     identifier = determineidentifier(question, "who")
     relationList = determineRelationWithMovie(question)
-    if relationList:
-        for item in list(set(relationList)):
-            result = neo.queryGraphDbWho(item)
-            if len(result):
-                if identifier and identifier == "plural":
-                    partialOutput = str((",").join([i["name"] for i in result]) + str(" " + relationsDict[item][0]) + " this movie.\n")
+    movie=determineMovieTalkedAbout(question)
+    if relationList and movie:
+        for movieitem in movie:
+            for item in list(set(relationList)):
+                result = neo.queryGraphDbWho(str(item),str(movieitem))
+                if len(result):
+                    if identifier and identifier == "plural":
+                        partialOutput = str((",").join([i["name"] for i in result]) + str(" " + relationsDict[item][0]) + " this movie.\n")
+                    else:
+                        partialOutput = str(result[0]["name"] + str(" " + relationsDict[item][0]) + " this movie.\n")
                 else:
-                    partialOutput = str(result[0]["name"] + str(" " + relationsDict[item][0]) + " this movie.\n")
-            else:
-                partialOutput = ""
-            outputString = outputString + partialOutput
+                    partialOutput = ""
+                outputString = outputString + partialOutput
     if outputString:
         return outputString
     else:
@@ -132,7 +159,7 @@ def how(question):
                                 print item
                                 partialstring = person  + " got " + str(
                                     item["good"]) + " likes , " + str(item["bad"]) + " dislikes and " + str(
-                                    item["neutral"]) + " neutral responses.\n"
+                                    item["neutral"]) + " neutral responses for his role in "+str(item["moviename"])+"\n"
                                 print "v3"
                                 print i, j, k
                                 outputString = outputString + partialstring

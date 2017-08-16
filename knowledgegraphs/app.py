@@ -5,8 +5,8 @@ import keywords
 import neo4jNodeList
 import generic_functions as genFunc
 
-conjunctionList=["and", "or", "but", "nor", "so", "for", "yet", "after", "although", "as", "as if", "as long as", "because", "before", "even if", "even though", "once", "since", "so that", "though", "till", "unless", "until", "what", "when", "whenever", "wherever", "whether", "while","."]
-
+conjunctionList=[ "or", "but", "nor", "so", "for", "yet", "after", "although", "as if", "as long as", "because", "before", "even if", "even though", "once", "since", "so that", "though", "till", "unless", "until", "what", "when", "whenever", "wherever", "whether", "while","."]
+# and,as
 #function to split reviewtext at conjuctions into list of smaller sentences
 # def sentenceBrokenAtConjunctions(rawtextAFterSpellCheck):
 #     rawtextConjReplacedwithStar=rawtextAFterSpellCheck
@@ -117,7 +117,29 @@ def doubleMatchTheRelationWithMovie(sentence):
     relationsDict=constants.relationWithMovie
     doubleMatch=[]
     for item in relationsDict:
-        doubleMatch=doubleMatch+[item for i in relationsDict[item] if str(" "+i+" ") in str(" "+sentence+" ")]
+        doubleMatch=doubleMatch+[i for i in relationsDict[item] if str(" "+i+" ") in str(" "+sentence+" ")]
+    if doubleMatch:
+        doubleMatchTemporary=sorted(doubleMatch, key=lambda time: len(time), reverse=True)
+        print doubleMatchTemporary
+        length=len(doubleMatchTemporary)
+        temp=[]
+        if length>1:
+            for i in range(len(doubleMatchTemporary)):
+                for j in doubleMatchTemporary[i+1:]:
+                    if str(j) in str(doubleMatchTemporary[i]):
+                        temp.append(j)
+
+            doubleMatch=list(set(doubleMatchTemporary)-set(temp))
+        else:
+            pass
+        tempo=[]
+        for item in doubleMatch:
+            for relation in relationsDict:
+                if item in relationsDict[relation]:
+                    tempo.append(relation)
+        doubleMatch=list(set(tempo))
+        print doubleMatch
+
     return doubleMatch
 
 def getUpdateNodesinfo(rawtext):
@@ -127,11 +149,11 @@ def getUpdateNodesinfo(rawtext):
     print spellCheckText
 
     # conjunction divide
-    listOFSmallerSentences=sentenceBrokenAtConjunctions(spellCheckText)
+    listOFSmallerSentences=[item for item in sentenceBrokenAtConjunctions(spellCheckText) if item.strip()]
     print listOFSmallerSentences
 
     # negation
-    negatedListOFSmallerSentences=[negation_sentence(str(item)) for item in listOFSmallerSentences]
+    negatedListOFSmallerSentences=[negation_sentence(str(item)) for item in listOFSmallerSentences ]
     print negatedListOFSmallerSentences
 
     # create ngrams
@@ -144,7 +166,22 @@ def getUpdateNodesinfo(rawtext):
 
     allNGrams=neo4jNodeList.getAllNodes()
     personNames=[item[0] for item in allNGrams if item[1]=="Person"]
+    import re
+
     movieNames=[item[2] for item in allNGrams if item[1]=="Movie"]
+    # removing the at the beginning of movie name
+    if negatedListOFSmallerSentences:
+        for length in range(len(negatedListOFSmallerSentences)):
+            for item in movieNames:
+                m= re.search("(^)the|The</b>",item)
+
+                if m:
+                    movieNameWithoutThe=" ".join((str(item).strip().split(" ")[1:]))
+                    if item in negatedListOFSmallerSentences[length]:
+                        pass
+                    elif movieNameWithoutThe in negatedListOFSmallerSentences[length]:
+                        negatedListOFSmallerSentences[length]= str(negatedListOFSmallerSentences[length]).replace(str(movieNameWithoutThe),str(item))
+                        listOFSmallerSentences[length]= str(listOFSmallerSentences[length]).replace(movieNameWithoutThe,item)
 
     personnamesInSmallStrings=[genFunc.doubleMatch(str(item),personNames) for item in negatedListOFSmallerSentences]
     movienamesInsmallstrings=[genFunc.doubleMatchWithNoDuplicates(str(item),movieNames) for item in negatedListOFSmallerSentences]
@@ -156,6 +193,7 @@ def getUpdateNodesinfo(rawtext):
     performanceArray=[searchForperformance(item) for item in negatedListOFSmallerSentences]
 
     nodeDictionary=[[personnamesInSmallStrings[int(i)],movienamesInsmallstrings[int(i)],relationWithMovie[int(i)],performanceArray[int(i)]] for i in range(0,len(listOFSmallerSentences))]
+
     Query=""
     print nodeDictionary
     for item in nodeDictionary:
@@ -168,6 +206,7 @@ def getUpdateNodesinfo(rawtext):
             relation=item[2][0]
         if item[3]:
             performance=item[3]
+        print persons, movie, relation, performance
         if performance:
             good = bad = neutral = 0
             if performance == "good":
@@ -176,7 +215,7 @@ def getUpdateNodesinfo(rawtext):
                 bad = 1
             if performance == "neutral":
                 neutral = 1
-
+            print persons,movie,relation
             if persons and movie and relation:
                 for person in persons:
                     query="match(n:Movie{title:'"+movie+"'})-[p:"+relation+"]->(m:Person{name:'"+person+"'}) set p.performance_good=p.performance_good+"+str(good)+",p.performance_bad=p.performance_bad+"+str(bad)+",p.performance_neutral=p.performance_neutral+"+str(neutral)+";"
@@ -184,6 +223,9 @@ def getUpdateNodesinfo(rawtext):
             elif persons and movie:
                 for person in persons:
                     query = "match(n:Movie{title:'" + movie + "'})-[p]->(m:Person{name:'" + person + "'}) set p.performance_good=p.performance_good+"+str(good)+",p.performance_bad=p.performance_bad+"+str(bad)+",p.performance_neutral=p.performance_neutral+"+str(neutral)+";"
+                    Query=Query+query
+            elif relation and movie:
+                    query = "match(n:Movie{title:'" + movie + "'})-[p:"+relation+"]->(m) set p.performance_good=p.performance_good+"+str(good)+",p.performance_bad=p.performance_bad+"+str(bad)+",p.performance_neutral=p.performance_neutral+"+str(neutral)+";"
                     Query=Query+query
             elif movie:
                 query = "match(n:Movie{title:'" + movie + "'})-[p]->(m) set n.performance_good=n.performance_good+"+str(good)+",n.performance_bad=p.performance_bad+"+str(bad)+",n.performance_neutral=n.performance_neutral+"+str(neutral)+";"
@@ -197,10 +239,15 @@ def updateNode(text):
     a= getUpdateNodesinfo(text)
     print a
     import neo4jNodeList as neo
+    flag=None
     for item in a.split(";"):
         if item.strip():
             neo.session.run(item)
-    return "success"
+            flag=True
+    if flag:
+        return "Grpah updation success"
+    else:
+        return "Graph not updated due to unclear information"
 # # a= app.getUpdateNodesinfo("i loved the performance of anne hathaway and matt damon in interstellar")
 # a= app.getUpdateNodesinfo("i loved the performance of christian bale anne hathaway and tom hardy in the dark knight rises")
 import traceback

@@ -75,7 +75,7 @@ def qna():
             data =json.loads(request.data)
             print data
             if "text" in data:
-                output=qaSystem.finalOutput(str(data["text"]).replace('"','') )
+                output=qaSystem.finalOutput(qaSystem.stringfilter(str(data["text"]).replace('"','') ))
                 if output:
                     return json.dumps({"text":output})
                 else:
@@ -90,3 +90,4 @@ def qna():
 
 if __name__ == '__main__':
     appf.run(host="0.0.0.0", port=8000,debug=True, threaded=True)
+

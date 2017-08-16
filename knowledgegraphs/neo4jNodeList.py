@@ -21,10 +21,14 @@ def getAllNodes():
     return nodeList
 
 
-def queryGraphDbWho(relation):
-    a = "MATCH (n)-[p:" + relation +" ]->(m) RETURN m.name as name"
+
+def queryGraphDbWho(relation,movie):
+    print relation ,movie
+    a="MATCH (n:Movie{title:'"+movie+"'})-[p:" + relation +" ]->(m) RETURN m.name as name,(p.performance_good+p.performance_bad+p.performance_neutral) AS cnt order by cnt desc"
+    print a
     result = session.run(a)
     nodeList = [record for record in result]
+    # b=sorted(nodeList.items(), key=lambda time: time[1]['time'], reverse=True)
     return nodeList
 
 def queryGraphDbHow(relation,person,movie):
