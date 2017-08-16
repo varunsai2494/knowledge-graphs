@@ -246,9 +246,9 @@ def updateNode(text):
             neo.session.run(item)
             flag=True
     if flag:
-        return "Grpah updation success"
+        return "success"
     else:
-        return "Graph not updated due to unclear information"
+        return "Fail"
 # # a= app.getUpdateNodesinfo("i loved the performance of anne hathaway and matt damon in interstellar")
 # a= app.getUpdateNodesinfo("i loved the performance of christian bale anne hathaway and tom hardy in the dark knight rises")
 import traceback
