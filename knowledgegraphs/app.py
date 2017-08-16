@@ -117,6 +117,7 @@ def doubleMatchTheRelationWithMovie(sentence):
     relationsDict=constants.relationWithMovie
     doubleMatch=[]
     for item in relationsDict:
+        print relationsDict[item]
         doubleMatch=doubleMatch+[i for i in relationsDict[item] if str(" "+i+" ") in str(" "+sentence+" ")]
     if doubleMatch:
         doubleMatchTemporary=sorted(doubleMatch, key=lambda time: len(time), reverse=True)

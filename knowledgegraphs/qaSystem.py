@@ -1,3 +1,4 @@
+import re
 import json
 import constants
 import app
@@ -40,9 +41,20 @@ def determineActorstalkedAbout(sentence):
 
 def determineMovieTalkedAbout(sentence):
     actors_movie = neo.getAllNodes()
-    actors = [item for item in actors_movie if str(item[1]) == "Movie"]
-    print actors
-    moviesFound = genfunc.doubleMatch(sentence, [item[2] for item in actors])
+    movies = [item for item in actors_movie if str(item[1]) == "Movie"]
+
+    if sentence:
+        for item in movies:
+            m= re.search("(^)the|The</b>",item[2])
+            if m:
+                movieNameWithoutThe=" ".join((str(item[2]).strip().split(" ")[1:]))
+                if item[2] in sentence:
+                    pass
+                elif movieNameWithoutThe in sentence:
+                    sentence= str(sentence).replace(str(movieNameWithoutThe),str(item[2]))
+
+
+    moviesFound = genfunc.doubleMatch(sentence, [item[2] for item in movies])
     if moviesFound:
         moviesFoundTemporary=sorted(moviesFound, key=lambda time: len(time), reverse=True)
         print moviesFoundTemporary
