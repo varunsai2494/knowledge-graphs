@@ -46,6 +46,7 @@ def determineMovieTalkedAbout(sentence):
     if sentence:
         for item in movies:
             m= re.search("(^)the|The</b>",item[2])
+
             if m:
                 movieNameWithoutThe=" ".join((str(item[2]).strip().split(" ")[1:]))
                 if item[2] in sentence:
@@ -53,7 +54,7 @@ def determineMovieTalkedAbout(sentence):
                 elif movieNameWithoutThe in sentence:
                     sentence= str(sentence).replace(str(movieNameWithoutThe),str(item[2]))
 
-
+    print sentence
     moviesFound = genfunc.doubleMatch(sentence, [item[2] for item in movies])
     if moviesFound:
         moviesFoundTemporary=sorted(moviesFound, key=lambda time: len(time), reverse=True)
@@ -70,6 +71,7 @@ def determineMovieTalkedAbout(sentence):
         else:
             pass
         print moviesFound
+
 
     return moviesFound
 
@@ -143,14 +145,15 @@ def how(question):
                             person=m[int(position["person"])]
                             relation=m[int(position["relation"])]
                             output=neo.queryGraphDbHow(relation,person,movie)
-                            for item in output:
-                                partialstring = person + "'s " + str(
-                                    constants.relationWithMovie[relation][1]) + " got " + str(
-                                    item["good"]) + " likes , " + str(item["bad"]) + " dislikes and " + str(
-                                    item["neutral"]) + " neutral responses.\n"
-                                print i,j,k
-                                print "v1"
-                                outputString = outputString + partialstring
+                            if output:
+                                for item in output:
+                                    partialstring = person + "'s " + str(
+                                        constants.relationWithMovie[relation][1]) + " got " + str(
+                                        item["good"]) + " likes , " + str(item["bad"]) + " dislikes and " + str(
+                                        item["neutral"]) + " neutral responses.\n"
+                                    print i,j,k
+                                    print "v1"
+                                    outputString = outputString + partialstring
                     else:
                         k=None
                         m = [i, j, k]
@@ -158,27 +161,28 @@ def how(question):
                         person = m[int(position["person"])]
                         relation = m[int(position["relation"])]
                         output=neo.queryGraphDbHow(relation, person, movie)
-                        if int(position["person"])==2:
-                            goodscore=badscore=neutralscore=0
-                            goodscore=[item["good"] for item in output if item["good"]]
-                            badscore = [item["bad"] for item in output if item["bad"]]
-                            neutralscore = [item["neutral"] for item in output if item["neutral"]]
-                            a=sum(goodscore)
-                            b=sum(badscore)
-                            c=sum(neutralscore)
-                            partialstring=str(constants.relationWithMovie[relation][1])+" in  "+str(movie)+" got "+ str(a) +" likes ,"+str(b) +" dislikes "+str(c) +" responses\n"
-                            outputString=outputString+partialstring
-                            print "v2"
-                            print i,j,k
-                        else:
-                            for item in output:
-                                print item
-                                partialstring = person  + " got " + str(
-                                    item["good"]) + " likes , " + str(item["bad"]) + " dislikes and " + str(
-                                    item["neutral"]) + " neutral responses for his role in "+str(item["moviename"])+"\n"
-                                print "v3"
-                                print i, j, k
-                                outputString = outputString + partialstring
+                        if output:
+                            if int(position["person"])==2:
+                                goodscore=badscore=neutralscore=0
+                                goodscore=[item["good"] for item in output if item["good"]]
+                                badscore = [item["bad"] for item in output if item["bad"]]
+                                neutralscore = [item["neutral"] for item in output if item["neutral"]]
+                                a=sum(goodscore)
+                                b=sum(badscore)
+                                c=sum(neutralscore)
+                                partialstring=str(constants.relationWithMovie[relation][1])+" in  "+str(movie)+" got "+ str(a) +" likes ,"+str(b) +" dislikes "+str(c) +" responses\n"
+                                outputString=outputString+partialstring
+                                print "v2"
+                                print i,j,k
+                            else:
+                                for item in output:
+                                    print item
+                                    partialstring = person  + " got " + str(
+                                        item["good"]) + " likes , " + str(item["bad"]) + " dislikes and " + str(
+                                        item["neutral"]) + " neutral responses for his role in "+str(item["moviename"])+"\n"
+                                    print "v3"
+                                    print i, j, k
+                                    outputString = outputString + partialstring
 
             else:
                 j=k=None
@@ -189,11 +193,12 @@ def how(question):
                 relation = m[int(position["relation"])]
                 output=neo.queryGraphDbHow(relation, person, movie)
                 print output
-                for item in output:
-                    partialstring= movie+" got "+str(item["good"])+" likes , "+str(item["bad"])+" dislikes and "+str(item["neutral"])+" neutral responses.\n"
-                    print "v4"
-                    print i, j, k
-                    outputString=outputString+partialstring
+                if output:
+                    for item in output:
+                        partialstring= movie+" got "+str(item["good"])+" likes , "+str(item["bad"])+" dislikes and "+str(item["neutral"])+" neutral responses.\n"
+                        print "v4"
+                        print i, j, k
+                        outputString=outputString+partialstring
 
 
     # for relation in relationList:
@@ -208,7 +213,7 @@ def how(question):
                 #             outputString = outputString + partialstring
                 # else:
 
-    if (outputString).strip:
+    if outputString and (outputString).strip():
         return outputString
     else:
         return "Sorry I couldn't find what you are looking for"
