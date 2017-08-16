@@ -75,7 +75,11 @@ def who(question):
     outputString=""
     relationsDict = constants.relationWithMovie
     identifier = determineidentifier(question, "who")
+    if not identifier:
+        identifier="plural"
     relationList = determineRelationWithMovie(question)
+
+
     movie=determineMovieTalkedAbout(question)
     if relationList and movie:
         for movieitem in movie:
