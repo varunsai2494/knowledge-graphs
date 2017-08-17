@@ -16,7 +16,7 @@
         <entry file="file://$PROJECT_DIR$/qaSystem.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="317">
-              <caret line="224" column="0" lean-forward="true" selection-start-line="224" selection-start-column="0" selection-end-line="224" selection-end-column="0" />
+              <caret line="224" column="0" lean-forward="false" selection-start-line="224" selection-start-column="0" selection-end-line="224" selection-end-column="0" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -27,7 +27,7 @@
       <file leaf-file-name="app.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
+            <state relative-caret-position="191">
               <caret line="143" column="0" lean-forward="false" selection-start-line="143" selection-start-column="0" selection-end-line="143" selection-end-column="0" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
@@ -71,7 +71,7 @@
       <file leaf-file-name="testfile.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/testfile.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="281">
+            <state relative-caret-position="227">
               <caret line="77" column="0" lean-forward="false" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
@@ -83,8 +83,8 @@
       <file leaf-file-name="neo4jNodeList.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/neo4jNodeList.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="343">
-              <caret line="64" column="0" lean-forward="true" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
+            <state relative-caret-position="199">
+              <caret line="64" column="0" lean-forward="false" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
               <folding>
                 <element signature="e#0#46#0" expanded="true" />
               </folding>
@@ -96,7 +96,7 @@
         <entry file="file:///usr/local/lib/python2.7/dist-packages/werkzeug/test.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="402">
-              <caret line="895" column="0" lean-forward="true" selection-start-line="895" selection-start-column="0" selection-end-line="895" selection-end-column="0" />
+              <caret line="895" column="0" lean-forward="false" selection-start-line="895" selection-start-column="0" selection-end-line="895" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -216,20 +216,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="knowledgegraphs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="knowledgegraphs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="knowledgegraphs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -448,7 +434,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="71" y="24" width="1787" height="994" extended-state="1" />
+    <frame x="71" y="24" width="1787" height="994" extended-state="0" />
     <layout>
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13957496" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1073,14 +1059,14 @@
     <entry file="file:///usr/local/lib/python2.7/dist-packages/werkzeug/test.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="402">
-          <caret line="895" column="0" lean-forward="true" selection-start-line="895" selection-start-column="0" selection-end-line="895" selection-end-column="0" />
+          <caret line="895" column="0" lean-forward="false" selection-start-line="895" selection-start-column="0" selection-end-line="895" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/testfile.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
+        <state relative-caret-position="227">
           <caret line="77" column="0" lean-forward="false" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
@@ -1090,7 +1076,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
+        <state relative-caret-position="191">
           <caret line="143" column="0" lean-forward="false" selection-start-line="143" selection-start-column="0" selection-end-line="143" selection-end-column="0" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
@@ -1108,8 +1094,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/neo4jNodeList.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="343">
-          <caret line="64" column="0" lean-forward="true" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
+        <state relative-caret-position="199">
+          <caret line="64" column="0" lean-forward="false" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
           <folding>
             <element signature="e#0#46#0" expanded="true" />
           </folding>
@@ -1119,7 +1105,7 @@
     <entry file="file://$PROJECT_DIR$/qaSystem.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="317">
-          <caret line="224" column="0" lean-forward="true" selection-start-line="224" selection-start-column="0" selection-end-line="224" selection-end-column="0" />
+          <caret line="224" column="0" lean-forward="false" selection-start-line="224" selection-start-column="0" selection-end-line="224" selection-end-column="0" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
