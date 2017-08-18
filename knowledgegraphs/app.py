@@ -229,7 +229,7 @@ def getUpdateNodesinfo(rawtext):
                     query = "match(n:Movie{title:'" + movie + "'})-[p:"+relation+"]->(m) set p.performance_good=p.performance_good+"+str(good)+",p.performance_bad=p.performance_bad+"+str(bad)+",p.performance_neutral=p.performance_neutral+"+str(neutral)+";"
                     Query=Query+query
             elif movie:
-                query = "match(n:Movie{title:'" + movie + "'})-[p]->(m) set n.performance_good=n.performance_good+"+str(good)+",n.performance_bad=p.performance_bad+"+str(bad)+",n.performance_neutral=n.performance_neutral+"+str(neutral)+";"
+                query = "match(n:Movie{title:'" + movie + "'}) set n.performance_good=n.performance_good+"+str(good)+",n.performance_bad=n.performance_bad+"+str(bad)+",n.performance_neutral=n.performance_neutral+"+str(neutral)+";"
                 Query=Query+query
             else:
                 Query=""
