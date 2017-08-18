@@ -55,11 +55,11 @@ def updategraph():
                 if output:
                     return json.dumps({"text":output})
                 else:
-                    return {"text": "Something went wrong"}
+                    return json.dumps({"text": "fail"})
             else:
-                return {"text":"Something went wrong"}
+                return json.dumps({"text": "fail"})
         except Exception as e:
-            print traceback.format_exc()
+            return json.dumps({"text": "fail"})
 
 
 @appf.route('/')
