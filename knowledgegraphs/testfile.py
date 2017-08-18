@@ -79,11 +79,11 @@ def qna():
                 if output:
                     return json.dumps({"text":output})
                 else:
-                    return {"text": "Something went wrong"}
+                    return json.dumps({"text":"Sorry I couldn't find what you were looking for"})
             else:
-                return {"text":"Something went wrong"}
+                return json.dumps({"text": "Sorry I couldn't find what you were looking for"})
         except Exception as e:
-            print traceback.format_exc()
+            return json.dumps({"text": "Sorry I couldn't find what you were looking for"})
 
 
 
